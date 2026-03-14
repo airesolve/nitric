@@ -23,6 +23,7 @@ import (
 	"github.com/avast/retry-go"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/lambda"
+	"github.com/nitrictech/nitric/cloud/aws/common"
 	"github.com/nitrictech/nitric/cloud/common/deploy/image"
 	"github.com/nitrictech/nitric/cloud/common/deploy/provider"
 	"github.com/nitrictech/nitric/cloud/common/deploy/pulumix"
@@ -181,8 +182,8 @@ func (a *NitricAwsPulumiProvider) Service(ctx *pulumi.Context, parent pulumi.Res
 		envVars[k] = v
 	}
 
-	if a.AwsConfig.ResourceResolver == "tagging" {
-		envVars["NITRIC_AWS_RESOURCE_RESOLVER"] = pulumi.String("tagging")
+	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
+		envVars["NITRIC_AWS_RESOURCE_RESOLVER"] = pulumi.String(common.ResourceResolverTagging)
 	}
 
 	if a.JobQueue != nil {

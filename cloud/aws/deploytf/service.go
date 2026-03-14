@@ -19,6 +19,7 @@ import (
 
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
+	"github.com/nitrictech/nitric/cloud/aws/common"
 	"github.com/nitrictech/nitric/cloud/aws/deploytf/generated/service"
 	"github.com/nitrictech/nitric/cloud/common/deploy/image"
 	"github.com/nitrictech/nitric/cloud/common/deploy/provider"
@@ -53,8 +54,8 @@ func (a *NitricAwsTerraformProvider) Service(stack cdktf.TerraformStack, name st
 		"NITRIC_HTTP_PROXY_PORT": jsii.String(fmt.Sprint(3000)),
 	}
 
-	if a.AwsConfig.ResourceResolver == "tagging" {
-		jsiiEnv["NITRIC_AWS_RESOURCE_RESOLVER"] = jsii.String("tagging")
+	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
+		jsiiEnv["NITRIC_AWS_RESOURCE_RESOLVER"] = jsii.String(common.ResourceResolverTagging)
 	}
 
 	// TODO: Only apply to requesting services

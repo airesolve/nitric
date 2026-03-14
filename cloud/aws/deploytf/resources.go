@@ -25,7 +25,7 @@ import (
 )
 
 func (a *NitricAwsTerraformProvider) ResourcesStore(stack cdktf.TerraformStack, accessRoleNames []string) error {
-	if a.AwsConfig.ResourceResolver == "tagging" {
+	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
 		return nil
 	}
 

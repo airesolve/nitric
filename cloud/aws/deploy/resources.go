@@ -24,7 +24,7 @@ import (
 )
 
 func (a *NitricAwsPulumiProvider) resourcesStore(ctx *pulumi.Context) error {
-	if a.AwsConfig.ResourceResolver == "tagging" {
+	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
 		return nil
 	}
 

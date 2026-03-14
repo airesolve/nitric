@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/nitrictech/nitric/cloud/aws/common"
 	"github.com/nitrictech/nitric/cloud/common/deploy/image"
 	"github.com/nitrictech/nitric/cloud/common/deploy/provider"
 	"github.com/nitrictech/nitric/cloud/common/deploy/tags"
@@ -364,10 +365,10 @@ func (p *NitricAwsPulumiProvider) Batch(ctx *pulumi.Context, parent pulumi.Resou
 				})
 			}
 
-			if p.AwsConfig.ResourceResolver == "tagging" {
+			if p.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
 				jobDefinitionContainerProperties.Environment = append(jobDefinitionContainerProperties.Environment, EnvironmentVariable{
 					Name:  "NITRIC_AWS_RESOURCE_RESOLVER",
-					Value: "tagging",
+					Value: common.ResourceResolverTagging,
 				})
 			}
 
