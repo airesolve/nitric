@@ -64,6 +64,7 @@ type AuroraRdsClusterConfig struct {
 
 type AwsConfig struct {
 	ScheduleTimezone                      string `mapstructure:"schedule-timezone,omitempty"`
+	ResourceResolver                      string `mapstructure:"resource-resolver,omitempty"`
 	Import                                AwsImports
 	Refresh                               bool
 	Apis                                  map[string]*AwsApiConfig
@@ -137,6 +138,11 @@ func ConfigFromAttributes(attributes map[string]interface{}) (*AwsConfig, error)
 	if awsConfig.ScheduleTimezone == "" {
 		// default to UTC
 		awsConfig.ScheduleTimezone = "UTC"
+	}
+
+	// Default resource resolver to SSM if not specified
+	if awsConfig.ResourceResolver == "" {
+		awsConfig.ResourceResolver = "ssm"
 	}
 
 	if awsConfig.Apis == nil {

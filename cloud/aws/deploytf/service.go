@@ -53,6 +53,10 @@ func (a *NitricAwsTerraformProvider) Service(stack cdktf.TerraformStack, name st
 		"NITRIC_HTTP_PROXY_PORT": jsii.String(fmt.Sprint(3000)),
 	}
 
+	if a.AwsConfig.ResourceResolver == "tagging" {
+		jsiiEnv["NITRIC_AWS_RESOURCE_RESOLVER"] = jsii.String("tagging")
+	}
+
 	// TODO: Only apply to requesting services
 	if a.Rds != nil {
 		jsiiEnv["NITRIC_DATABASE_BASE_URL"] = jsii.Sprintf("postgres://%s:%s@%s:%s", *a.Rds.ClusterUsernameOutput(), *a.Rds.ClusterPasswordOutput(),

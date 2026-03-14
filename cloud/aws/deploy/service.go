@@ -181,6 +181,10 @@ func (a *NitricAwsPulumiProvider) Service(ctx *pulumi.Context, parent pulumi.Res
 		envVars[k] = v
 	}
 
+	if a.AwsConfig.ResourceResolver == "tagging" {
+		envVars["NITRIC_AWS_RESOURCE_RESOLVER"] = pulumi.String("tagging")
+	}
+
 	if a.JobQueue != nil {
 		envVars["NITRIC_JOB_QUEUE_ARN"] = a.JobQueue.Arn
 	}

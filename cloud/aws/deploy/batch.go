@@ -364,6 +364,13 @@ func (p *NitricAwsPulumiProvider) Batch(ctx *pulumi.Context, parent pulumi.Resou
 				})
 			}
 
+			if p.AwsConfig.ResourceResolver == "tagging" {
+				jobDefinitionContainerProperties.Environment = append(jobDefinitionContainerProperties.Environment, EnvironmentVariable{
+					Name:  "NITRIC_AWS_RESOURCE_RESOLVER",
+					Value: "tagging",
+				})
+			}
+
 			if job.Requirements.Gpus > 0 {
 				jobDefinitionContainerProperties.ResourceRequirements = append(jobDefinitionContainerProperties.ResourceRequirements, ResourceRequirement{
 					Type:  "GPU",
