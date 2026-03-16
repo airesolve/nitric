@@ -54,10 +54,6 @@ func (a *NitricAwsTerraformProvider) Service(stack cdktf.TerraformStack, name st
 		"NITRIC_HTTP_PROXY_PORT": jsii.String(fmt.Sprint(3000)),
 	}
 
-	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
-		jsiiEnv["NITRIC_AWS_RESOURCE_RESOLVER"] = jsii.String(common.ResourceResolverTagging)
-	}
-
 	// TODO: Only apply to requesting services
 	if a.Rds != nil {
 		jsiiEnv["NITRIC_DATABASE_BASE_URL"] = jsii.Sprintf("postgres://%s:%s@%s:%s", *a.Rds.ClusterUsernameOutput(), *a.Rds.ClusterPasswordOutput(),
@@ -66,6 +62,12 @@ func (a *NitricAwsTerraformProvider) Service(stack cdktf.TerraformStack, name st
 
 	for k, v := range config.GetEnv() {
 		jsiiEnv[k] = jsii.String(v)
+	}
+
+	// Set after config.GetEnv() so the stack-level setting cannot be overridden by
+	// user env config, which would break resource discovery when SSM index creation was skipped.
+	if a.AwsConfig.ResourceResolver == common.ResourceResolverTagging {
+		jsiiEnv["NITRIC_AWS_RESOURCE_RESOLVER"] = jsii.String(common.ResourceResolverTagging)
 	}
 
 	serviceConfig := &service.ServiceConfig{

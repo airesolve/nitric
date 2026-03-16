@@ -15,6 +15,7 @@
 package common
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -64,7 +65,7 @@ func TestConfigFromAttributes_ResourceResolver(t *testing.T) {
 					t.Fatalf("expected error containing %q, got nil", tt.errContains)
 				}
 				if tt.errContains != "" {
-					if !containsString(err.Error(), tt.errContains) {
+					if !strings.Contains(err.Error(), tt.errContains) {
 						t.Fatalf("expected error containing %q, got %q", tt.errContains, err.Error())
 					}
 				}
@@ -80,17 +81,4 @@ func TestConfigFromAttributes_ResourceResolver(t *testing.T) {
 			}
 		})
 	}
-}
-
-func containsString(s, substr string) bool {
-	return len(s) >= len(substr) && searchString(s, substr)
-}
-
-func searchString(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
 }
